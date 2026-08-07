@@ -1,0 +1,48 @@
+import '../models/won_auction.dart';
+
+final List<WonAuction> dummyWonAuctions = [
+  const WonAuction(
+    id: "TN-1001",
+    company: "ABC Logistics",
+    origin: "Delhi",
+    destination: "Mumbai",
+    vehicleType: "Container Truck",
+    winningPrice: 42000,
+    pickupDate: "12 Aug 2026",
+    awardedDate: "10 Aug 2026",
+    status: "Awaiting Acceptance",
+  ),
+  const WonAuction(
+    id: "TN-1002",
+    company: "FastMove Transport",
+    origin: "Pune",
+    destination: "Hyderabad",
+    vehicleType: "Trailer",
+    winningPrice: 36500,
+    pickupDate: "14 Aug 2026",
+    awardedDate: "11 Aug 2026",
+    status: "Accepted",
+  ),
+  const WonAuction(
+    id: "TN-1003",
+    company: "BlueLine Cargo",
+    origin: "Ahmedabad",
+    destination: "Jaipur",
+    vehicleType: "Open Body",
+    winningPrice: 28500,
+    pickupDate: "16 Aug 2026",
+    awardedDate: "12 Aug 2026",
+    status: "Expired",
+  ),
+  const WonAuction(
+    id: "TN-1004",
+    company: "SpeedX Logistics",
+    origin: "Lucknow",
+    destination: "Bhopal",
+    vehicleType: "Container Truck",
+    winningPrice: 39800,
+    pickupDate: "18 Aug 2026",
+    awardedDate: "13 Aug 2026",
+    status: "Accepted",
+  ),
+];

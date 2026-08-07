@@ -1,0 +1,10 @@
+{
+  "description": "BidHaul is a smart freight reverse-auction platform that connects shippers and carriers, optimizing logistics costs and enhancing shipment efficiency.",
+  "robots": {
+    "index": false
+  },
+  "accessibility": {
+    "addBypassLinks": false,
+    "ignoreReducedMotion": false
+  }
+}
