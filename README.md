@@ -156,8 +156,8 @@ For recruiter and evaluator convenience, pre-filled **Demo Credential Banners wi
 
 | Role | Email | Password | Access Method / Instructions |
 | :--- | :--- | :--- | :--- |
-| **🏢 Company Shipper** | `test@company.com` | `password123` | Select **Company / Shipper** on Role Screen ➔ Tap **Auto-fill** ➔ Sign In |
-| **🚛 Fleet Transporter**| `transporter@bidhaul.com` | `password123` | Select **Transporter / Carrier** on Role Screen ➔ Tap **Auto-fill** ➔ Sign In |
+| **🏢 Company Shipper** | `test@company.com` | `12345678` | Select **Company / Shipper** on Role Screen ➔ Tap **Auto-fill** ➔ Sign In |
+| **🚛 Fleet Transporter**| `transporter@bidhaul.com` | `12345678` | Select **Transporter / Carrier** on Role Screen ➔ Tap **Auto-fill** ➔ Sign In |
 | **🛡️ Super Admin** | `superadmin@bidhaul.com` | `password123` | **Tap the BidHaul Logo emblem 10 times consecutively** on the Splash Screen to open Admin Portal ➔ Sign In |
 
 > 💡 **Super Admin Secret Access**: The Super Admin Governance Portal is protected behind a secret gesture. On the initial **BidHaul Splash Screen**, **tap the central BidHaul Logo emblem 10 times within 5 seconds** to automatically trigger navigation to the Super Admin Login screen.

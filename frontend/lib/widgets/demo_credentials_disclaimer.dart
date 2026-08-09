@@ -21,12 +21,16 @@ class DemoCredentialsDisclaimer extends StatelessWidget {
 
     String demoEmail = 'test@company.com';
     String roleLabel = 'Company Shipper';
+    String demoPassword = '12345678';
+
     if (isAdmin) {
       demoEmail = 'superadmin@bidhaul.com';
       roleLabel = 'Super Admin';
+      demoPassword = 'password123';
     } else if (!isCompany) {
       demoEmail = 'transporter@bidhaul.com';
       roleLabel = 'Fleet Transporter';
+      demoPassword = '12345678';
     }
 
     return Container(
@@ -48,7 +52,7 @@ class DemoCredentialsDisclaimer extends StatelessWidget {
           const SizedBox(width: 8),
           Expanded(
             child: Text(
-              'Demo ($roleLabel): $demoEmail / password123',
+              'Demo ($roleLabel): $demoEmail / $demoPassword',
               style: const TextStyle(
                 fontSize: 11,
                 fontWeight: FontWeight.w600,
@@ -58,7 +62,7 @@ class DemoCredentialsDisclaimer extends StatelessWidget {
           ),
           if (onQuickFill != null)
             GestureDetector(
-              onTap: () => onQuickFill!(demoEmail, 'password123'),
+              onTap: () => onQuickFill!(demoEmail, demoPassword),
               child: Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 decoration: BoxDecoration(
