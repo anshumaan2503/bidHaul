@@ -20,9 +20,7 @@
 
   [![Download BidHaul APK](https://img.shields.io/badge/📥_Download-BidHaul_Release_APK_(58MB)-2496ED?style=for-the-badge&logo=android&logoColor=white)](https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk)
 
-  > 🔗 **Direct APK Link**: `https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk`  
-  > 🌐 **Live Cloud Backend**: `https://bidhaul-backend.onrender.com`  
-  > ❤️ **Backend Uptime Health Check**: `https://bidhaul-backend.onrender.com/health`
+  > 🔗 **Direct APK Link**: `https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk`
 
   ---
 
@@ -202,7 +200,6 @@ docker run -p 8080:8080 --name bidhaul-api bidhaul-backend:latest
 
 | Endpoint | Method | Required Role | Functionality |
 | :--- | :--- | :--- | :--- |
-| `/health` | `GET` | Public | System Uptime & Health Status |
 | `/api/v1/auth/login` | `POST` | Public | User Authentication & JWT Generation |
 | `/api/v1/auth/signup` | `POST` | Public | Role-based Registration |
 | `/api/v1/tenders` | `GET` / `POST` | Company / Transporter | Query tender feed or post freight tender |
