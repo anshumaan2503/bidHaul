@@ -11,7 +11,10 @@ import com.bidhaul.tender.enums.TenderStatus;
 import com.bidhaul.tender.repository.TenderRepository;
 import com.bidhaul.user.entity.UserEntity;
 import com.bidhaul.user.repository.UserRepository;
+import com.bidhaul.notification.enums.NotificationType;
+import com.bidhaul.notification.event.NotificationEvent;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,18 +30,21 @@ public class BidService {
     private final BidRepository bidRepository;
     private final TenderRepository tenderRepository;
     private final UserRepository userRepository;
+    private final ApplicationEventPublisher eventPublisher;
     private final BigDecimal minimumDecrement;
 
     public BidService(
             BidRepository bidRepository,
             TenderRepository tenderRepository,
             UserRepository userRepository,
+            ApplicationEventPublisher eventPublisher,
             @Value("${bid.minimum-decrement:500.00}")
             BigDecimal minimumDecrement
     ) {
         this.bidRepository = bidRepository;
         this.tenderRepository = tenderRepository;
         this.userRepository = userRepository;
+        this.eventPublisher = eventPublisher;
         this.minimumDecrement = minimumDecrement;
     }
 
@@ -135,9 +141,21 @@ public class BidService {
         bid.setRemarks(request.remarks().trim());
         bid.setStatus(BidStatus.PENDING);
 
-        return BidResponseDto.from(
-                bidRepository.save(bid)
-        );
+        BidEntity savedBid = bidRepository.save(bid);
+
+        try {
+            eventPublisher.publishEvent(new NotificationEvent(
+                    tender.getCompany().getId(),
+                    NotificationType.BID,
+                    "New Bid Received!",
+                    "Transporter placed a bid of ₹" + bidAmount + " on tender #" + tender.getTenderNumber(),
+                    "TENDER",
+                    tender.getId()
+            ));
+        } catch (Exception ignored) {
+        }
+
+        return BidResponseDto.from(savedBid);
     }
 
     @Transactional(readOnly = true)

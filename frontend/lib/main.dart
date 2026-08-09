@@ -17,11 +17,14 @@ import 'providers/subscription_provider.dart';
 import 'providers/tender_provider.dart';
 import 'providers/transporter_profile_provider.dart';
 import 'screens/splash/splash_screen.dart';
+import 'services/push_notification_service.dart';
 import 'theme/app_theme.dart';
 import 'theme/bidhaul_scroll_behavior.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await PushNotificationService().initialize();
+  PushNotificationService().startLiveBidPolling();
   runApp(const BidHaulApp());
 }
 
