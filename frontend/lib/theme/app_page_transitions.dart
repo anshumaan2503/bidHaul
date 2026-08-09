@@ -15,39 +15,19 @@ class LuxuryPageTransitionsBuilder extends PageTransitionsBuilder {
     Animation<double> secondaryAnimation,
     Widget child,
   ) {
-    // Primary Curved Entrance Animation
     final curvedAnimation = CurvedAnimation(
       parent: animation,
-      curve: Curves.easeOutCubic,
-      reverseCurve: Curves.easeInCubic,
-    );
-
-    // Slide Offset (Subtle 5% slide from right to left)
-    final slideTween = Tween<Offset>(
-      begin: const Offset(0.05, 0.0),
-      end: Offset.zero,
-    );
-
-    // Micro-Scale (Subtle 0.96 -> 1.0 expansion)
-    final scaleTween = Tween<double>(
-      begin: 0.96,
-      end: 1.0,
-    );
-
-    // Opacity Fade (0.0 -> 1.0)
-    final fadeTween = Tween<double>(
-      begin: 0.0,
-      end: 1.0,
+      curve: Curves.fastOutSlowIn,
     );
 
     return FadeTransition(
-      opacity: fadeTween.animate(curvedAnimation),
-      child: ScaleTransition(
-        scale: scaleTween.animate(curvedAnimation),
-        child: SlideTransition(
-          position: slideTween.animate(curvedAnimation),
-          child: child,
-        ),
+      opacity: curvedAnimation,
+      child: SlideTransition(
+        position: Tween<Offset>(
+          begin: const Offset(0.02, 0.0),
+          end: Offset.zero,
+        ).animate(curvedAnimation),
+        child: child,
       ),
     );
   }
@@ -58,31 +38,23 @@ class AppPageRoute {
   /// Default Ultra-Smooth Screen Route Transition (Login -> Dashboard, etc.)
   static Route<T> create<T>(Widget page) {
     return PageRouteBuilder<T>(
-      transitionDuration: const Duration(milliseconds: 400),
-      reverseTransitionDuration: const Duration(milliseconds: 300),
+      transitionDuration: const Duration(milliseconds: 220),
+      reverseTransitionDuration: const Duration(milliseconds: 180),
       pageBuilder: (context, animation, secondaryAnimation) => page,
       transitionsBuilder: (context, animation, secondaryAnimation, child) {
         final curvedAnimation = CurvedAnimation(
           parent: animation,
-          curve: Curves.easeOutCubic,
-          reverseCurve: Curves.easeInCubic,
+          curve: Curves.fastOutSlowIn,
         );
 
-        final fadeAnimation = Tween<double>(begin: 0.0, end: 1.0).animate(curvedAnimation);
-        final scaleAnimation = Tween<double>(begin: 0.94, end: 1.0).animate(curvedAnimation);
-        final slideAnimation = Tween<Offset>(
-          begin: const Offset(0.04, 0.0),
-          end: Offset.zero,
-        ).animate(curvedAnimation);
-
         return FadeTransition(
-          opacity: fadeAnimation,
-          child: ScaleTransition(
-            scale: scaleAnimation,
-            child: SlideTransition(
-              position: slideAnimation,
-              child: child,
-            ),
+          opacity: curvedAnimation,
+          child: SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(0.02, 0.0),
+              end: Offset.zero,
+            ).animate(curvedAnimation),
+            child: child,
           ),
         );
       },
