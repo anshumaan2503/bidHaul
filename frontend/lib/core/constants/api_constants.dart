@@ -1,6 +1,6 @@
 class ApiConstants {
-  // Configurable base URL. Set to PC's local Wi-Fi IP for physical mobile testing.
-  static String baseUrl = 'http://192.168.29.138:8080';
+  // Live Render Production Backend URL
+  static String baseUrl = 'https://bidhaul-backend.onrender.com';
 
   // Auth endpoints
   static const String signup = '/api/v1/auth/signup';
