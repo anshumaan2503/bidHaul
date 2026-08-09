@@ -18,6 +18,7 @@ import 'providers/tender_provider.dart';
 import 'providers/transporter_profile_provider.dart';
 import 'screens/splash/splash_screen.dart';
 import 'theme/app_theme.dart';
+import 'theme/bidhaul_scroll_behavior.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -50,6 +51,7 @@ class BidHaulApp extends StatelessWidget {
       child: MaterialApp(
         title: 'BidHaul - Smart Reverse Auction Network',
         debugShowCheckedModeBanner: false,
+        scrollBehavior: const BidHaulScrollBehavior(),
         themeMode: ThemeMode.dark,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
