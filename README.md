@@ -11,6 +11,16 @@
 
 ---
 
+### 📲 Quick Download Mobile App (Android APK)
+
+Click the badge below to download and install the pre-compiled **BidHaul Release APK** directly to your Android phone:
+
+[![Download BidHaul APK](https://img.shields.io/badge/Download-BidHaul%20Android%20APK-2496ED?style=for-the-badge&logo=android&logoColor=white)](https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk)
+
+> 🔗 **Direct Download Link**: [https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk](https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk)
+
+---
+
 ## 🌟 Key Platform Capabilities
 
 ### 🏢 Shipper Freight Portal (Company)
