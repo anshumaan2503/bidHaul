@@ -1,0 +1,43 @@
+import '../models/tender.dart';
+
+final List<TenderModel> dummyTenders = [
+  TenderModel(
+    id: "245",
+    tenderNumber: "TND-245",
+    title: "Steel Rod Transportation",
+    description: "Transport steel rods safely.",
+    pickupLocation: "Delhi",
+    deliveryLocation: "Mumbai",
+    materialType: "Steel",
+    vehicleType: "Trailer",
+    weightTons: 25.0,
+    ceilingBudget: 45000.0,
+    status: "LIVE",
+  ),
+  TenderModel(
+    id: "241",
+    tenderNumber: "TND-241",
+    title: "Cement Bags",
+    description: "Deliver cement bags.",
+    pickupLocation: "Pune",
+    deliveryLocation: "Surat",
+    materialType: "Cement",
+    vehicleType: "Truck",
+    weightTons: 18.0,
+    ceilingBudget: 28000.0,
+    status: "COMPLETED",
+  ),
+  TenderModel(
+    id: "238",
+    tenderNumber: "TND-238",
+    title: "Furniture Shipment",
+    description: "Office furniture transport.",
+    pickupLocation: "Indore",
+    deliveryLocation: "Jaipur",
+    materialType: "Furniture",
+    vehicleType: "Container",
+    weightTons: 12.0,
+    ceilingBudget: 18000.0,
+    status: "DRAFT",
+  ),
+];

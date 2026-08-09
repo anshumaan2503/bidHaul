@@ -1,0 +1,40 @@
+import '../models/competitive_bid.dart';
+
+final List<CompetitiveBidModel> dummyCompetitiveStatement = [
+  CompetitiveBidModel(
+    rank: 1,
+    bidId: "B101",
+    bidNumber: "BID-101",
+    transporterId: "T101",
+    transporterName: "ABC Logistics",
+    initialBidAmount: 42000.0,
+    currentNegotiationAmount: 41500.0,
+    finalNegotiatedAmount: 41500.0,
+    savingsAmount: 500.0,
+    negotiationStatus: "ACCEPTED",
+  ),
+  CompetitiveBidModel(
+    rank: 2,
+    bidId: "B102",
+    bidNumber: "BID-102",
+    transporterId: "T102",
+    transporterName: "BlueLine Cargo",
+    initialBidAmount: 42500.0,
+    currentNegotiationAmount: 41900.0,
+    finalNegotiatedAmount: 41900.0,
+    savingsAmount: 600.0,
+    negotiationStatus: "ACCEPTED",
+  ),
+  CompetitiveBidModel(
+    rank: 3,
+    bidId: "B103",
+    bidNumber: "BID-103",
+    transporterId: "T103",
+    transporterName: "SpeedX Logistics",
+    initialBidAmount: 43000.0,
+    currentNegotiationAmount: 42400.0,
+    finalNegotiatedAmount: 42400.0,
+    savingsAmount: 600.0,
+    negotiationStatus: "PENDING",
+  ),
+];
