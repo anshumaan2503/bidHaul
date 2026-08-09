@@ -150,15 +150,17 @@ Crafted with an executive **Dark Espresso & Warm Gold** aesthetic tailored for m
 
 ---
 
-## 🔑 Pre-Seeded Demo Login Credentials
+## 🔑 Pre-Seeded Demo Login Credentials & Portal Access
 
-Use these accounts to test all user roles in the **BidHaul Mobile App or Web Portal**:
+For recruiter and evaluator convenience, pre-filled **Demo Credential Banners with 1-Tap Auto-fill** are integrated directly into the Shipper, Carrier, and Admin login screens.
 
-| Role | Email | Password | Key Permissions |
+| Role | Email | Password | Access Method / Instructions |
 | :--- | :--- | :--- | :--- |
-| **🛡️ Super Admin** | `superadmin@bidhaul.com` | `password123` | Global System Governance, KYC Approval & Payment Killswitch |
-| **🏢 Company Shipper** | `test@company.com` | `password123` | Tender Creation, Counter-Offers & Invoice Payments |
-| **🚛 Fleet Transporter**| `transporter@bidhaul.com` | `password123` | Reverse Bidding, Contract Acceptance & Delivery Milestones |
+| **🏢 Company Shipper** | `test@company.com` | `password123` | Select **Company / Shipper** on Role Screen ➔ Tap **Auto-fill** ➔ Sign In |
+| **🚛 Fleet Transporter**| `transporter@bidhaul.com` | `password123` | Select **Transporter / Carrier** on Role Screen ➔ Tap **Auto-fill** ➔ Sign In |
+| **🛡️ Super Admin** | `superadmin@bidhaul.com` | `password123` | **Tap the BidHaul Logo emblem 10 times consecutively** on the Splash Screen to open Admin Portal ➔ Sign In |
+
+> 💡 **Super Admin Secret Access**: The Super Admin Governance Portal is protected behind a secret gesture. On the initial **BidHaul Splash Screen**, **tap the central BidHaul Logo emblem 10 times within 5 seconds** to automatically trigger navigation to the Super Admin Login screen.
 
 <br />
 

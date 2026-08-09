@@ -79,15 +79,23 @@ The platform is fully containerized via **Docker**, deployed on **Render Cloud**
 
 ---
 
-## 🔑 Demo Seeded Credentials for Recruiter Evaluation
+## 🔑 Demo Seeded Credentials & Access Instructions for Evaluators
 
-Test all 3 enterprise roles in the **BidHaul Mobile App** or **Web Portal**:
+For evaluator convenience, **Demo Credential Banners with 1-Tap Auto-fill** have been built directly into the login screens of the BidHaul platform.
 
 | User Role | Email | Password | Access & Capabilities |
 | :--- | :--- | :--- | :--- |
 | **🛡️ Super Admin** | `superadmin@bidhaul.com` | `password123` | Global System Telemetry, KYC Verification & Payment Killswitch |
 | **🏢 Company Shipper** | `test@company.com` | `password123` | Publish Load Tenders, Monitor Reverse Bids & Pay Invoices |
 | **🚛 Fleet Transporter**| `transporter@bidhaul.com` | `password123` | Reverse Bidding, Counter-Offer Acceptance & Proof of Delivery |
+
+> 🔑 **Super Admin Secret Gesture Access (10-Tap Gesture)**:  
+> The Super Admin Governance Portal is protected behind a secret gesture. To access the Super Admin login portal:
+> 1. Open the app to the initial **BidHaul Splash Screen**.
+> 2. **Tap the central animated BidHaul Logo emblem 10 times consecutively within 5 seconds**.
+> 3. The app will immediately navigate to the **Admin Portal Login screen** (`AdminLoginScreen`).
+
+<br />
 
 ---
 

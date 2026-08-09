@@ -10,6 +10,7 @@ import '../../../widgets/bidhaul_logo.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/inputs/app_text_field.dart';
 import '../../../widgets/render_free_tier_disclaimer.dart';
+import '../../../widgets/demo_credentials_disclaimer.dart';
 import '../../../theme/app_page_transitions.dart';
 import '../dashboard/admin_dashboard_screen.dart';
 
@@ -163,6 +164,16 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                               size: 20,
                             ),
                           ),
+                        ),
+                        const SizedBox(height: AppSpacing.sm),
+                        DemoCredentialsDisclaimer(
+                          role: 'admin',
+                          onQuickFill: (email, password) {
+                            setState(() {
+                              _emailController.text = email;
+                              _passwordController.text = password;
+                            });
+                          },
                         ),
                         const SizedBox(height: AppSpacing.sm),
                         const RenderFreeTierDisclaimer(),

@@ -11,6 +11,7 @@ import '../../../widgets/bidhaul_logo.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/inputs/app_text_field.dart';
 import '../../../widgets/render_free_tier_disclaimer.dart';
+import '../../../widgets/demo_credentials_disclaimer.dart';
 import '../../../theme/app_page_transitions.dart';
 import '../../admin/dashboard/admin_dashboard_screen.dart';
 import '../../company/navigation/company_navigation_screen.dart';
@@ -395,6 +396,19 @@ class _LoginScreenState extends State<LoginScreen>
                               ),
                             ),
                           ),
+                        ),
+
+                        const SizedBox(height: AppSpacing.sm),
+
+                        // Evaluator Quick Demo Credentials Disclaimer
+                        DemoCredentialsDisclaimer(
+                          role: widget.role,
+                          onQuickFill: (email, password) {
+                            setState(() {
+                              _emailController.text = email;
+                              _passwordController.text = password;
+                            });
+                          },
                         ),
 
                         const SizedBox(height: AppSpacing.sm),
