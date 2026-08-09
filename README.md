@@ -18,9 +18,9 @@
 
   Click the button below to download and test the live, pre-compiled **BidHaul APK** directly on any Android device:
 
-  [![Download BidHaul APK](https://img.shields.io/badge/📥_Download-BidHaul_Release_APK_(58MB)-2496ED?style=for-the-badge&logo=android&logoColor=white)](https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk)
+  [![Download BidHaul APK](https://img.shields.io/badge/📥_Download-BidHaul_Release_APK_(58MB)-2496ED?style=for-the-badge&logo=android&logoColor=white)](https://github.com/anshumaan2503/bidHaul/releases/download/v1.0.0/BidHaul.apk)
 
-  > 🔗 **Direct APK Link**: `https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk`
+  > 🔗 **Direct Instant Download**: `https://github.com/anshumaan2503/bidHaul/releases/download/v1.0.0/BidHaul.apk`
 
   ---
 
