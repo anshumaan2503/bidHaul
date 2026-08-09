@@ -3,7 +3,7 @@
 **Project Title**: BidHaul – Next-Gen B2B Reverse Auction Freight Procurement Platform  
 **Developer**: Anshuman  
 **Repository**: [https://github.com/anshumaan2503/bidHaul](https://github.com/anshumaan2503/bidHaul)  
-**Live Android APK**: [https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk](https://github.com/anshumaan2503/bidHaul/raw/main/BidHaul.apk)  
+**Live Android APK**: [https://raw.githubusercontent.com/anshumaan2503/bidHaul/main/BidHaul.apk](https://raw.githubusercontent.com/anshumaan2503/bidHaul/main/BidHaul.apk)  
 
 ---
 
