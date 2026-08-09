@@ -98,10 +98,12 @@ class _AnimatedBidHaulLogoState extends State<AnimatedBidHaulLogo>
           AnimatedBuilder(
             animation: _pulseController,
             builder: (context, child) {
-              return CustomPaint(
-                size: Size(baseSize * 1.25, baseSize * 1.25),
-                painter: _GeometricShieldPainter(
-                  progress: _pulseController.value,
+              return RepaintBoundary(
+                child: CustomPaint(
+                  size: Size(baseSize * 1.25, baseSize * 1.25),
+                  painter: _GeometricShieldPainter(
+                    progress: _pulseController.value,
+                  ),
                 ),
               );
             },
@@ -111,10 +113,12 @@ class _AnimatedBidHaulLogoState extends State<AnimatedBidHaulLogo>
           AnimatedBuilder(
             animation: _particleController,
             builder: (context, child) {
-              return CustomPaint(
-                size: Size(baseSize * 1.2, baseSize * 1.2),
-                painter: _FloatingEmbersPainter(
-                  progress: _particleController.value,
+              return RepaintBoundary(
+                child: CustomPaint(
+                  size: Size(baseSize * 1.2, baseSize * 1.2),
+                  painter: _FloatingEmbersPainter(
+                    progress: _particleController.value,
+                  ),
                 ),
               );
             },

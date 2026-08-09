@@ -271,10 +271,12 @@ class _SplashScreenState extends State<SplashScreen>
           AnimatedBuilder(
             animation: _particleController,
             builder: (context, child) {
-              return CustomPaint(
-                size: screenSize,
-                painter: _SplashParticlePainter(
-                  progress: _particleController.value,
+              return RepaintBoundary(
+                child: CustomPaint(
+                  size: screenSize,
+                  painter: _SplashParticlePainter(
+                    progress: _particleController.value,
+                  ),
                 ),
               );
             },
