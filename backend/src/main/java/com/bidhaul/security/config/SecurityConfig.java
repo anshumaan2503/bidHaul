@@ -82,6 +82,8 @@ public class SecurityConfig {
                                 .permitAll()
 
                                 .requestMatchers(
+                                        "/health",
+                                        "/api/v1/health",
                                         "/actuator/**"
                                 )
                                 .permitAll()
