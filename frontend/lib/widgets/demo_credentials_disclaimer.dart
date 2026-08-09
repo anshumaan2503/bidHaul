@@ -28,7 +28,7 @@ class DemoCredentialsDisclaimer extends StatelessWidget {
       roleLabel = 'Super Admin';
       demoPassword = 'password123';
     } else if (!isCompany) {
-      demoEmail = 'transporter@bidhaul.com';
+      demoEmail = 'test@transporter1.com';
       roleLabel = 'Fleet Transporter';
       demoPassword = '12345678';
     }

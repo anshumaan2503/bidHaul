@@ -87,7 +87,7 @@ For evaluator convenience, **Demo Credential Banners with 1-Tap Auto-fill** have
 | :--- | :--- | :--- | :--- |
 | **🛡️ Super Admin** | `superadmin@bidhaul.com` | `password123` | Global System Telemetry, KYC Verification & Payment Killswitch |
 | **🏢 Company Shipper** | `test@company.com` | `12345678` | Publish Load Tenders, Monitor Reverse Bids & Pay Invoices |
-| **🚛 Fleet Transporter**| `transporter@bidhaul.com` | `12345678` | Reverse Bidding, Counter-Offer Acceptance & Proof of Delivery |
+| **🚛 Fleet Transporter**| `test@transporter1.com` | `12345678` | Reverse Bidding, Counter-Offer Acceptance & Proof of Delivery |
 
 > 🔑 **Super Admin Secret Gesture Access (10-Tap Gesture)**:  
 > The Super Admin Governance Portal is protected behind a secret gesture. To access the Super Admin login portal:
