@@ -10,6 +10,7 @@ import '../../../theme/app_typography.dart';
 import '../../../widgets/bidhaul_logo.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/inputs/app_text_field.dart';
+import '../../../widgets/render_free_tier_disclaimer.dart';
 import '../../../theme/app_page_transitions.dart';
 import '../../admin/dashboard/admin_dashboard_screen.dart';
 import '../../company/navigation/company_navigation_screen.dart';
@@ -396,7 +397,12 @@ class _LoginScreenState extends State<LoginScreen>
                           ),
                         ),
 
-                        const SizedBox(height: AppSpacing.lg),
+                        const SizedBox(height: AppSpacing.sm),
+
+                        // Render Free Tier Cold Start Disclaimer
+                        const RenderFreeTierDisclaimer(),
+
+                        const SizedBox(height: AppSpacing.md),
 
                         // Login CTA Button
                         PrimaryButton(

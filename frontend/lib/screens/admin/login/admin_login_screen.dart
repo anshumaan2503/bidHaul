@@ -9,6 +9,7 @@ import '../../../theme/app_typography.dart';
 import '../../../widgets/bidhaul_logo.dart';
 import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/inputs/app_text_field.dart';
+import '../../../widgets/render_free_tier_disclaimer.dart';
 import '../../../theme/app_page_transitions.dart';
 import '../dashboard/admin_dashboard_screen.dart';
 
@@ -163,7 +164,9 @@ class _AdminLoginScreenState extends State<AdminLoginScreen> {
                             ),
                           ),
                         ),
-                        const SizedBox(height: AppSpacing.xl),
+                        const SizedBox(height: AppSpacing.sm),
+                        const RenderFreeTierDisclaimer(),
+                        const SizedBox(height: AppSpacing.md),
                         PrimaryButton(
                           title: 'Sign In to Admin Portal',
                           icon: Icons.shield_outlined,

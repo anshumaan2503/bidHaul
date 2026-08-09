@@ -20,6 +20,7 @@ import 'screens/splash/splash_screen.dart';
 import 'services/push_notification_service.dart';
 import 'theme/app_theme.dart';
 import 'theme/bidhaul_scroll_behavior.dart';
+import 'widgets/web_responsive_wrapper.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +59,7 @@ class BidHaulApp extends StatelessWidget {
         themeMode: ThemeMode.dark,
         theme: AppTheme.lightTheme,
         darkTheme: AppTheme.darkTheme,
+        builder: (context, child) => WebResponsiveWrapper(child: child ?? const SizedBox()),
         home: const SplashScreen(),
       ),
     );
