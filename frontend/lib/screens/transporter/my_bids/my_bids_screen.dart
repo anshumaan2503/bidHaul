@@ -120,10 +120,22 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
                                       itemBuilder: (context, index) {
                                         final bid = provider.myBids[index];
 
-                                        return BidCard(
-                                          bid: bid,
-                                          showActions: false,
-                                        );
+                                         return BidCard(
+                                           bid: bid,
+                                           showActions: true,
+                                           onTap: () {
+                                             Navigator.push(
+                                               context,
+                                               MaterialPageRoute(
+                                                 builder: (_) => PostBidNegotiationScreen(
+                                                   bidId: bid.id,
+                                                   tenderId: bid.tenderId,
+                                                   transporterName: bid.transporterName,
+                                                 ),
+                                               ),
+                                             );
+                                           },
+                                         );
                                       },
                                     ),
                                   ),

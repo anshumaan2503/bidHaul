@@ -10,11 +10,18 @@ import '../common/base_glass_card.dart';
 import '../common/info_row.dart';
 
 class BidCard extends StatelessWidget {
-  const BidCard({super.key, required this.bid, this.showActions = true, this.onTap});
+  const BidCard({
+    super.key,
+    required this.bid,
+    this.showActions = true,
+    this.onTap,
+    this.onNegotiate,
+  });
 
   final BidModel bid;
   final bool showActions;
   final VoidCallback? onTap;
+  final VoidCallback? onNegotiate;
 
   @override
   Widget build(BuildContext context) {
@@ -98,6 +105,28 @@ class BidCard extends StatelessWidget {
               ],
             ),
           ),
+          if (showActions || onNegotiate != null) ...[
+            const SizedBox(height: AppSpacing.md),
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.primaryCyan,
+                  foregroundColor: AppColors.darkMidnight,
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: AppRadius.md,
+                  ),
+                ),
+                onPressed: onNegotiate ?? onTap,
+                icon: const Icon(Icons.handshake_rounded, size: 18),
+                label: Text(
+                  "See Counter Offer / Negotiate",
+                  style: AppTypography.h3(color: AppColors.darkMidnight),
+                ),
+              ),
+            ),
+          ],
         ],
       ),
     );
