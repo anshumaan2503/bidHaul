@@ -7,6 +7,8 @@ import '../../../theme/app_spacing.dart';
 import '../../../theme/app_typography.dart';
 import '../../../widgets/cards/bid_card.dart';
 
+import '../../company/post_bid_negotiation/post_bid_negotiation_screen.dart';
+
 class MyBidsScreen extends StatefulWidget {
   const MyBidsScreen({super.key});
 
@@ -45,16 +47,36 @@ class _MyBidsScreenState extends State<MyBidsScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      IconButton(
-                        onPressed: () => Navigator.pop(context),
-                        icon: const Icon(
-                          Icons.arrow_back_ios_new_rounded,
-                          color: Colors.white,
+                      Row(
+                        children: [
+                          IconButton(
+                            onPressed: () => Navigator.pop(context),
+                            icon: const Icon(
+                              Icons.arrow_back_ios_new_rounded,
+                              color: Colors.white,
+                            ),
+                          ),
+                          const SizedBox(width: 10),
+                          Text("My Bids", style: AppTypography.displayHero()),
+                        ],
+                      ),
+                      TextButton.icon(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const PostBidNegotiationScreen(),
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.handshake_rounded, color: AppColors.primaryCyan, size: 20),
+                        label: const Text(
+                          "Negotiations",
+                          style: TextStyle(color: AppColors.primaryCyan, fontWeight: FontWeight.bold),
                         ),
                       ),
-                      const SizedBox(width: 10),
-                      Text("My Bids", style: AppTypography.displayHero()),
                     ],
                   ),
 

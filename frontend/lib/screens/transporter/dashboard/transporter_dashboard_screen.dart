@@ -18,6 +18,7 @@ import '../bid_history/bid_history_screen.dart';
 import '../browse_tenders/browse_tenders_screen.dart';
 import '../my_bids/my_bids_screen.dart';
 import '../won_auctions/won_auctions_screen.dart';
+import '../../company/post_bid_negotiation/post_bid_negotiation_screen.dart';
 
 /// TransporterDashboardScreen
 ///
@@ -237,6 +238,21 @@ class _TransporterDashboardScreenState extends State<TransporterDashboardScreen>
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (_) => const MyBidsScreen()),
+                      );
+                    },
+                  ),
+
+                  QuickActionCard(
+                    title: "Negotiations & Counter Offers",
+                    subtitle: "Review & respond to company rate counter-offers",
+                    icon: Icons.handshake_rounded,
+                    iconColor: AppColors.primaryCyan,
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (_) => const PostBidNegotiationScreen(),
+                        ),
                       );
                     },
                   ),
