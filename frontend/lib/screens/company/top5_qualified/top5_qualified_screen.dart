@@ -190,6 +190,8 @@ class _CompetitiveBidCard extends StatelessWidget {
                   MaterialPageRoute(
                     builder: (_) => PostBidNegotiationScreen(
                       tenderId: tenderId,
+                      bidId: item.bidId,
+                      transporterName: item.transporterName,
                     ),
                   ),
                 );
