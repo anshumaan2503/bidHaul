@@ -11,6 +11,7 @@ import '../../../widgets/buttons/primary_button.dart';
 import '../../../widgets/common/app_status_badge.dart';
 import '../../transporter/place_bid/place_bid_screen.dart';
 import '../live_bids/live_bids_screen.dart';
+import '../post_bid_negotiation/post_bid_negotiation_screen.dart';
 import '../top5_qualified/top5_qualified_screen.dart';
 
 class TenderDetailsScreen extends StatefulWidget {
@@ -238,6 +239,23 @@ class _TenderDetailsScreenState extends State<TenderDetailsScreen> {
                           context,
                           MaterialPageRoute(
                             builder: (_) => Top5QualifiedScreen(tender: _currentTender),
+                          ),
+                        );
+                      },
+                    ),
+
+                    const SizedBox(height: 14),
+
+                    PrimaryButton(
+                      title: "Post-Bid Negotiation",
+                      icon: Icons.handshake_rounded,
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => PostBidNegotiationScreen(
+                              tenderId: _currentTender.id,
+                            ),
                           ),
                         );
                       },

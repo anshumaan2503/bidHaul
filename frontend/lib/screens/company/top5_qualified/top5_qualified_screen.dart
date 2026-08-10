@@ -8,6 +8,7 @@ import '../../../theme/app_colors.dart';
 import '../../../theme/app_radius.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_typography.dart';
+import '../post_bid_negotiation/post_bid_negotiation_screen.dart';
 
 class Top5QualifiedScreen extends StatefulWidget {
   final TenderModel? tender;
@@ -100,7 +101,10 @@ class _Top5QualifiedScreenState extends State<Top5QualifiedScreen> {
                                     itemCount: provider.competitiveStatement.length,
                                     itemBuilder: (context, index) {
                                       final item = provider.competitiveStatement[index];
-                                      return _CompetitiveBidCard(item: item);
+                                      return _CompetitiveBidCard(
+                                        item: item,
+                                        tenderId: widget.tender?.id,
+                                      );
                                     },
                                   ),
                   ),
@@ -116,8 +120,9 @@ class _Top5QualifiedScreenState extends State<Top5QualifiedScreen> {
 
 class _CompetitiveBidCard extends StatelessWidget {
   final CompetitiveBidModel item;
+  final String? tenderId;
 
-  const _CompetitiveBidCard({required this.item});
+  const _CompetitiveBidCard({required this.item, this.tenderId});
 
   @override
   Widget build(BuildContext context) {
@@ -167,6 +172,35 @@ class _CompetitiveBidCard extends StatelessWidget {
           ),
           if (item.savingsAmount > 0)
             _row("Savings", "₹${item.savingsAmount.toStringAsFixed(0)}"),
+          const SizedBox(height: AppSpacing.md),
+          SizedBox(
+            width: double.infinity,
+            child: ElevatedButton.icon(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primaryCyan,
+                foregroundColor: AppColors.darkMidnight,
+                padding: const EdgeInsets.symmetric(vertical: 12),
+                shape: RoundedRectangleBorder(
+                  borderRadius: AppRadius.md,
+                ),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => PostBidNegotiationScreen(
+                      tenderId: tenderId,
+                    ),
+                  ),
+                );
+              },
+              icon: const Icon(Icons.handshake_rounded, size: 20),
+              label: Text(
+                "Negotiate / Counter Offer",
+                style: AppTypography.h3(color: AppColors.darkMidnight),
+              ),
+            ),
+          ),
         ],
       ),
     );
