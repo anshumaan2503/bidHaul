@@ -118,6 +118,15 @@ class NotificationProvider extends ChangeNotifier {
     }
   }
 
+  void addLocalNotification(NotificationModel notification) {
+    _notifications.insert(0, notification);
+    if (!notification.read) {
+      _unreadNotifications.insert(0, notification);
+      _unreadCount += 1;
+    }
+    notifyListeners();
+  }
+
   void clearError() {
     _errorMessage = null;
     notifyListeners();

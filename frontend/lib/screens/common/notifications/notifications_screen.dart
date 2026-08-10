@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/notification.dart';
 import '../../../providers/notification_provider.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_typography.dart';
 import '../../../widgets/cards/notification_card.dart';
+import '../../company/post_bid_negotiation/post_bid_negotiation_screen.dart';
 
 class NotificationsScreen extends StatefulWidget {
   const NotificationsScreen({super.key});
@@ -170,6 +172,17 @@ class _NotificationsScreenState extends State<NotificationsScreen> {
                                 onTap: () {
                                   if (!notification.read) {
                                     provider.markAsRead(notification.id);
+                                  }
+                                  if (notification.type == NotificationTypeEnum.NEGOTIATION ||
+                                      notification.referenceType == 'NEGOTIATION') {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (_) => PostBidNegotiationScreen(
+                                          bidId: notification.referenceId ?? 'bid-001',
+                                        ),
+                                      ),
+                                    );
                                   }
                                 },
                               );

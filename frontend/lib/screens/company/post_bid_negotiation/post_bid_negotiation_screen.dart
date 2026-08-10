@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/notification.dart';
 import '../../../providers/negotiation_provider.dart';
+import '../../../providers/notification_provider.dart';
 import '../../../theme/app_colors.dart';
 import '../../../theme/app_spacing.dart';
 import '../../../theme/app_typography.dart';
@@ -92,8 +94,9 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
               final remarks = remarksText.isNotEmpty ? remarksText : "Counter offer rate proposal";
 
               final messenger = ScaffoldMessenger.of(context);
-              Navigator.pop(ctx);
               final provider = Provider.of<NegotiationProvider>(context, listen: false);
+              final notifProvider = Provider.of<NotificationProvider>(context, listen: false);
+              Navigator.pop(ctx);
 
               bool ok = false;
               if (negotiationId != null && negotiationId.isNotEmpty) {
@@ -111,9 +114,23 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
               }
 
               if (ok) {
+                // Auto-generate notification for Transporter alert
+                notifProvider.addLocalNotification(
+                  NotificationModel(
+                    id: 'notif-${DateTime.now().millisecondsSinceEpoch}',
+                    type: NotificationTypeEnum.NEGOTIATION,
+                    title: "New Counter Offer Received!",
+                    message: "Company submitted a counter offer proposal of ₹${amount.toStringAsFixed(0)}. Tap to review & respond.",
+                    read: false,
+                    referenceType: "NEGOTIATION",
+                    referenceId: widget.bidId ?? 'bid-001',
+                    createdAt: DateTime.now(),
+                  ),
+                );
+
                 messenger.showSnackBar(
                   const SnackBar(
-                    content: Text("Counter offer submitted successfully!"),
+                    content: Text("Counter offer submitted! Transporter notified via alert."),
                     backgroundColor: AppColors.successGreen,
                   ),
                 );
