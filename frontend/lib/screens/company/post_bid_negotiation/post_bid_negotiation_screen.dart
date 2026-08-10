@@ -16,12 +16,14 @@ class PostBidNegotiationScreen extends StatefulWidget {
   final String? tenderId;
   final String? bidId;
   final String? transporterName;
+  final double? initialAmount;
 
   const PostBidNegotiationScreen({
     super.key,
     this.tenderId,
     this.bidId,
     this.transporterName,
+    this.initialAmount,
   });
 
   @override
@@ -40,7 +42,11 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
         provider.fetchMyNegotiations();
       }
       if (widget.bidId != null && widget.bidId!.isNotEmpty) {
-        provider.ensureNegotiationForBid(widget.bidId!, widget.transporterName);
+        provider.ensureNegotiationForBid(
+          widget.bidId!,
+          widget.transporterName,
+          widget.initialAmount,
+        );
       }
     });
   }
@@ -200,11 +206,15 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
       ).toList();
       if (matches.isNotEmpty) {
         list = matches;
+      } else if (provider.currentNegotiation != null &&
+          (provider.currentNegotiation!.bidId == targetBidId ||
+           provider.currentNegotiation!.id == targetBidId ||
+           targetBidId.contains(provider.currentNegotiation!.bidId) ||
+           provider.currentNegotiation!.bidId.contains(targetBidId))) {
+        list = [provider.currentNegotiation!];
+      } else {
+        list = [];
       }
-    }
-
-    if (list.isEmpty && provider.currentNegotiation != null) {
-      list = [provider.currentNegotiation!];
     }
 
     return Scaffold(

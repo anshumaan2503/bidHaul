@@ -192,6 +192,11 @@ class _CompetitiveBidCard extends StatelessWidget {
                       tenderId: tenderId,
                       bidId: item.bidId,
                       transporterName: item.transporterName,
+                      initialAmount: item.finalNegotiatedAmount > 0
+                          ? item.finalNegotiatedAmount
+                          : item.currentNegotiationAmount > 0
+                              ? item.currentNegotiationAmount
+                              : item.initialBidAmount,
                     ),
                   ),
                 );

@@ -238,10 +238,12 @@ class NegotiationProvider with ChangeNotifier {
     }
   }
 
-  void ensureNegotiationForBid(String bidId, [String? transporterName]) {
+  void ensureNegotiationForBid(String bidId, [String? transporterName, double? initialAmount]) {
     final existingIdx = _myNegotiations.indexWhere(
       (n) => n.bidId == bidId || n.id == bidId || bidId.contains(n.bidId) || n.bidId.contains(bidId),
     );
+    final double startAmount = (initialAmount != null && initialAmount > 0) ? initialAmount : 18000.0;
+
     if (existingIdx == -1) {
       final newNeg = NegotiationModel(
         id: 'neg-${bidId.replaceAll('#', '')}',
@@ -250,7 +252,7 @@ class NegotiationProvider with ChangeNotifier {
         companyId: 'company-001',
         transporterId: 'transporter-001',
         status: 'COUNTER_OFFERED',
-        currentAmount: 28000.0,
+        currentAmount: startAmount,
         lastOfferedBy: 'COMPANY',
         createdAt: DateTime.now(),
         updatedAt: DateTime.now(),
@@ -259,7 +261,7 @@ class NegotiationProvider with ChangeNotifier {
             id: 'offer-init',
             offeredBy: 'COMPANY',
             offeredByName: transporterName ?? 'BidHaul Test Company',
-            amount: 28000.0,
+            amount: startAmount,
             remarks: 'Counter offer rate proposal',
             createdAt: DateTime.now(),
           ),
@@ -279,8 +281,8 @@ class NegotiationProvider with ChangeNotifier {
           companyId: existing.companyId,
           transporterId: existing.transporterId,
           status: 'COUNTER_OFFERED',
-          currentAmount: existing.currentAmount ?? 28000.0,
-          lastOfferedBy: existing.lastOfferedBy ?? 'COMPANY',
+          currentAmount: startAmount,
+          lastOfferedBy: 'COMPANY',
           finalAmount: existing.finalAmount,
           acceptedBy: existing.acceptedBy,
           closedAt: null,
@@ -290,6 +292,9 @@ class NegotiationProvider with ChangeNotifier {
         );
         _updateLocalList(updated);
         _currentNegotiation = updated;
+        notifyListeners();
+      } else {
+        _currentNegotiation = existing;
         notifyListeners();
       }
     }
