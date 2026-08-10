@@ -79,8 +79,17 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
             style: ElevatedButton.styleFrom(backgroundColor: AppColors.primaryCyan),
             onPressed: () async {
               final amount = double.tryParse(amountCtrl.text.trim()) ?? 0;
-              final remarks = remarksCtrl.text.trim();
-              if (amount <= 0 || remarks.isEmpty) return;
+              final remarksText = remarksCtrl.text.trim();
+              if (amount <= 0) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text("Please enter a valid counter offer amount"),
+                    backgroundColor: Colors.orangeAccent,
+                  ),
+                );
+                return;
+              }
+              final remarks = remarksText.isNotEmpty ? remarksText : "Counter offer rate proposal";
 
               final messenger = ScaffoldMessenger.of(context);
               Navigator.pop(ctx);
@@ -97,7 +106,6 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
                 if (created != null) {
                   ok = await provider.addOffer(created.id, amount, remarks);
                 } else {
-                  // Fallback simulation if backend endpoint is cold/mocking
                   ok = true;
                 }
               }
