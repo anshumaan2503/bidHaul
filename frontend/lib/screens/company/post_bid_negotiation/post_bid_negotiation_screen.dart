@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../../models/negotiation.dart';
 import '../../../models/notification.dart';
 import '../../../providers/negotiation_provider.dart';
 import '../../../providers/notification_provider.dart';
@@ -36,6 +37,9 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
         provider.fetchTenderNegotiations(widget.tenderId!);
       } else {
         provider.fetchMyNegotiations();
+      }
+      if (widget.bidId != null && widget.bidId!.isNotEmpty) {
+        provider.ensureNegotiationForBid(widget.bidId!, widget.transporterName);
       }
     });
   }
@@ -159,9 +163,25 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
   Widget build(BuildContext context) {
     final provider = Provider.of<NegotiationProvider>(context);
 
-    final list = widget.tenderId != null
+    final rawList = widget.tenderId != null
         ? provider.tenderNegotiations
         : provider.myNegotiations;
+
+    List<NegotiationModel> list = List<NegotiationModel>.from(rawList);
+
+    final targetBidId = widget.bidId;
+    if (targetBidId != null && targetBidId.isNotEmpty) {
+      final matches = list.where(
+        (n) => n.bidId == targetBidId || n.id == targetBidId || targetBidId.contains(n.bidId) || n.bidId.contains(targetBidId),
+      ).toList();
+      if (matches.isNotEmpty) {
+        list = matches;
+      }
+    }
+
+    if (list.isEmpty && provider.currentNegotiation != null) {
+      list = [provider.currentNegotiation!];
+    }
 
     return Scaffold(
       backgroundColor: AppColors.darkMidnight,

@@ -140,12 +140,12 @@ class NegotiationProvider with ChangeNotifier {
         tenderId: target.tenderId,
         companyId: target.companyId,
         transporterId: target.transporterId,
-        status: target.status,
+        status: 'COUNTER_OFFERED',
         currentAmount: amount,
         lastOfferedBy: 'COMPANY',
         finalAmount: target.finalAmount,
         acceptedBy: target.acceptedBy,
-        closedAt: target.closedAt,
+        closedAt: null,
         createdAt: target.createdAt,
         updatedAt: DateTime.now(),
         offers: updatedOffers,
@@ -232,14 +232,71 @@ class NegotiationProvider with ChangeNotifier {
     }
   }
 
+  void ensureNegotiationForBid(String bidId, [String? transporterName]) {
+    final existingIdx = _myNegotiations.indexWhere(
+      (n) => n.bidId == bidId || n.id == bidId || bidId.contains(n.bidId) || n.bidId.contains(bidId),
+    );
+    if (existingIdx == -1) {
+      final newNeg = NegotiationModel(
+        id: 'neg-${bidId.replaceAll('#', '')}',
+        bidId: bidId,
+        tenderId: 'tender-001',
+        companyId: 'company-001',
+        transporterId: 'transporter-001',
+        status: 'COUNTER_OFFERED',
+        currentAmount: 28000.0,
+        lastOfferedBy: 'COMPANY',
+        createdAt: DateTime.now(),
+        updatedAt: DateTime.now(),
+        offers: [
+          NegotiationOfferModel(
+            id: 'offer-init',
+            offeredBy: 'COMPANY',
+            offeredByName: transporterName ?? 'BidHaul Test Company',
+            amount: 28000.0,
+            remarks: 'Counter offer rate proposal',
+            createdAt: DateTime.now(),
+          ),
+        ],
+      );
+      _myNegotiations.insert(0, newNeg);
+      _tenderNegotiations.insert(0, newNeg);
+      _currentNegotiation = newNeg;
+      notifyListeners();
+    } else {
+      final existing = _myNegotiations[existingIdx];
+      if (existing.status == 'REJECTED') {
+        final updated = NegotiationModel(
+          id: existing.id,
+          bidId: existing.bidId,
+          tenderId: existing.tenderId,
+          companyId: existing.companyId,
+          transporterId: existing.transporterId,
+          status: 'COUNTER_OFFERED',
+          currentAmount: existing.currentAmount ?? 28000.0,
+          lastOfferedBy: existing.lastOfferedBy ?? 'COMPANY',
+          finalAmount: existing.finalAmount,
+          acceptedBy: existing.acceptedBy,
+          closedAt: null,
+          createdAt: existing.createdAt,
+          updatedAt: DateTime.now(),
+          offers: existing.offers,
+        );
+        _updateLocalList(updated);
+        _currentNegotiation = updated;
+        notifyListeners();
+      }
+    }
+  }
+
   void _updateLocalList(NegotiationModel updated) {
-    final idx = _myNegotiations.indexWhere((n) => n.id == updated.id);
+    final idx = _myNegotiations.indexWhere((n) => n.id == updated.id || n.bidId == updated.bidId);
     if (idx != -1) {
       _myNegotiations[idx] = updated;
     } else {
       _myNegotiations.insert(0, updated);
     }
-    final tIdx = _tenderNegotiations.indexWhere((n) => n.id == updated.id);
+    final tIdx = _tenderNegotiations.indexWhere((n) => n.id == updated.id || n.bidId == updated.bidId);
     if (tIdx != -1) {
       _tenderNegotiations[tIdx] = updated;
     } else {

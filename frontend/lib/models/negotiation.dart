@@ -131,7 +131,10 @@ class NegotiationModel {
     };
   }
 
-  bool get isOpen => status.toUpperCase() == 'OPEN';
+  bool get isOpen =>
+      status.toUpperCase() == 'OPEN' ||
+      status.toUpperCase() == 'COUNTER_OFFERED' ||
+      status.toUpperCase() == 'IN_PROGRESS';
   bool get isAccepted => status.toUpperCase() == 'ACCEPTED';
   bool get isRejected => status.toUpperCase() == 'REJECTED';
 }
