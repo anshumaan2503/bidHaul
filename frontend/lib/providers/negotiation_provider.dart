@@ -132,10 +132,27 @@ class NegotiationProvider with ChangeNotifier {
         createdAt: DateTime.now(),
       );
 
-      final target = _currentNegotiation ?? NegotiationModel(
+      final cleanId = id.replaceAll('#', '');
+      NegotiationModel? target;
+      final allList = [..._myNegotiations, ..._tenderNegotiations];
+      final matchIdx = allList.indexWhere(
+        (n) => n.id == cleanId || n.bidId == cleanId || n.id == id || n.bidId == id ||
+               (n.bidId.isNotEmpty && cleanId.isNotEmpty && (cleanId.contains(n.bidId) || n.bidId.contains(cleanId))),
+      );
+
+      if (matchIdx != -1) {
+        target = allList[matchIdx];
+      } else {
+        target = _currentNegotiation;
+      }
+
+      final String actualBidId = target?.bidId ?? (cleanId.startsWith('neg-') ? cleanId.replaceFirst('neg-', '') : cleanId);
+      final String actualTenderId = target?.tenderId ?? 'tender-001';
+
+      target ??= NegotiationModel(
         id: id,
-        bidId: 'bid-001',
-        tenderId: 'tender-001',
+        bidId: actualBidId,
+        tenderId: actualTenderId,
         companyId: 'company-001',
         transporterId: 'transporter-001',
         status: 'OPEN',
@@ -245,15 +262,17 @@ class NegotiationProvider with ChangeNotifier {
   }
 
   void ensureNegotiationForBid(String bidId, [String? transporterName, double? initialAmount]) {
+    final cleanBidId = bidId.replaceAll('#', '');
     final existingIdx = _myNegotiations.indexWhere(
-      (n) => n.bidId == bidId || n.id == bidId || bidId.contains(n.bidId) || n.bidId.contains(bidId),
+      (n) => n.bidId == cleanBidId || n.id == cleanBidId || n.bidId == bidId || n.id == bidId ||
+             (n.bidId.isNotEmpty && cleanBidId.isNotEmpty && (cleanBidId.contains(n.bidId) || n.bidId.contains(cleanBidId))),
     );
     final double startAmount = (initialAmount != null && initialAmount > 0) ? initialAmount : 18000.0;
 
     if (existingIdx == -1) {
       final newNeg = NegotiationModel(
-        id: 'neg-${bidId.replaceAll('#', '')}',
-        bidId: bidId,
+        id: 'neg-$cleanBidId',
+        bidId: cleanBidId,
         tenderId: 'tender-001',
         companyId: 'company-001',
         transporterId: 'transporter-001',
@@ -307,13 +326,26 @@ class NegotiationProvider with ChangeNotifier {
   }
 
   void _updateLocalList(NegotiationModel updated) {
-    final idx = _myNegotiations.indexWhere((n) => n.id == updated.id || n.bidId == updated.bidId);
+    final cleanBidId = updated.bidId.replaceAll('#', '');
+    final cleanId = updated.id.replaceAll('#', '');
+
+    bool matches(NegotiationModel n) {
+      final nCleanBid = n.bidId.replaceAll('#', '');
+      final nCleanId = n.id.replaceAll('#', '');
+      return nCleanId == cleanId ||
+             nCleanBid == cleanBidId ||
+             nCleanId == cleanBidId ||
+             nCleanBid == cleanId ||
+             (cleanBidId.isNotEmpty && nCleanBid.isNotEmpty && (cleanBidId.contains(nCleanBid) || nCleanBid.contains(cleanBidId)));
+    }
+
+    final idx = _myNegotiations.indexWhere(matches);
     if (idx != -1) {
       _myNegotiations[idx] = updated;
     } else {
       _myNegotiations.insert(0, updated);
     }
-    final tIdx = _tenderNegotiations.indexWhere((n) => n.id == updated.id || n.bidId == updated.bidId);
+    final tIdx = _tenderNegotiations.indexWhere(matches);
     if (tIdx != -1) {
       _tenderNegotiations[tIdx] = updated;
     } else {

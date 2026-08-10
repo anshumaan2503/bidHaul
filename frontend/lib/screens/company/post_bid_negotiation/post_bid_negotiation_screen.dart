@@ -117,32 +117,17 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
               final notifProvider = Provider.of<NotificationProvider>(context, listen: false);
               Navigator.pop(ctx);
 
-              bool ok = false;
-              if (negotiationId != null && negotiationId.isNotEmpty) {
-                ok = await provider.addOffer(
-                  negotiationId,
-                  amount,
-                  remarks,
-                  offeredBy: userRoleStr,
-                  offeredByName: userNameStr,
-                );
-              } else {
-                final created = await provider.createNegotiation(
-                  widget.bidId ?? 'bid-001',
-                  remarks,
-                );
-                if (created != null) {
-                  ok = await provider.addOffer(
-                    created.id,
-                    amount,
-                    remarks,
-                    offeredBy: userRoleStr,
-                    offeredByName: userNameStr,
-                  );
-                } else {
-                  ok = true;
-                }
-              }
+              final targetId = (negotiationId != null && negotiationId.isNotEmpty)
+                  ? negotiationId
+                  : (widget.bidId ?? provider.currentNegotiation?.id ?? provider.myNegotiations.firstOrNull?.id ?? provider.tenderNegotiations.firstOrNull?.id ?? 'bid-001');
+
+              final ok = await provider.addOffer(
+                targetId,
+                amount,
+                remarks,
+                offeredBy: userRoleStr,
+                offeredByName: userNameStr,
+              );
 
               if (ok) {
                 // Auto-generate notification for the target role!
@@ -290,7 +275,7 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
                           backgroundColor: AppColors.primaryCyan,
                           foregroundColor: AppColors.darkMidnight,
                         ),
-                        onPressed: () => _showCounterOfferDialog(context),
+                        onPressed: () => _showCounterOfferDialog(context, list.isNotEmpty ? list.first.id : null),
                         icon: const Icon(Icons.add, size: 18),
                         label: const Text("Counter Offer"),
                       ),
@@ -329,7 +314,7 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
                                               vertical: 14,
                                             ),
                                           ),
-                                          onPressed: () => _showCounterOfferDialog(context),
+                                          onPressed: () => _showCounterOfferDialog(context, list.isNotEmpty ? list.first.id : null),
                                           icon: const Icon(Icons.add_circle_outline_rounded),
                                           label: Text(
                                             "Submit Counter Offer Now",
