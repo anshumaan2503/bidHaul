@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import '../../../models/negotiation.dart';
 import '../../../models/notification.dart';
+import '../../../providers/auth_provider.dart';
 import '../../../providers/negotiation_provider.dart';
 import '../../../providers/notification_provider.dart';
 import '../../../theme/app_colors.dart';
@@ -48,6 +49,14 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
     final amountCtrl = TextEditingController();
     final remarksCtrl = TextEditingController();
 
+    final authProvider = Provider.of<AuthProvider>(context, listen: false);
+    final user = authProvider.user;
+    final isCompany = user?.isCompany ?? true;
+    final userRoleStr = isCompany ? 'COMPANY' : 'TRANSPORTER';
+    final userNameStr = user?.fullName.isNotEmpty == true
+        ? user!.fullName
+        : (isCompany ? 'BidHaul Company' : 'Express Logistics');
+
     showDialog(
       context: context,
       builder: (ctx) => AlertDialog(
@@ -55,7 +64,7 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
         title: Text(
           widget.transporterName != null
               ? "Counter Offer for ${widget.transporterName}"
-              : "Submit Counter Offer",
+              : "Submit Counter Offer ($userRoleStr)",
           style: AppTypography.h2(),
         ),
         content: Column(
@@ -70,7 +79,7 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
             const SizedBox(height: 12),
             AppTextField(
               controller: remarksCtrl,
-              hint: "Remarks (e.g. Target rate for contract)",
+              hint: "Remarks (e.g. Target rate proposal)",
               prefixIcon: Icons.notes,
               maxLines: 2,
             ),
@@ -95,7 +104,7 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
                 );
                 return;
               }
-              final remarks = remarksText.isNotEmpty ? remarksText : "Counter offer rate proposal";
+              final remarks = remarksText.isNotEmpty ? remarksText : "Counter offer proposal";
 
               final messenger = ScaffoldMessenger.of(context);
               final provider = Provider.of<NegotiationProvider>(context, listen: false);
@@ -104,27 +113,40 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
 
               bool ok = false;
               if (negotiationId != null && negotiationId.isNotEmpty) {
-                ok = await provider.addOffer(negotiationId, amount, remarks);
+                ok = await provider.addOffer(
+                  negotiationId,
+                  amount,
+                  remarks,
+                  offeredBy: userRoleStr,
+                  offeredByName: userNameStr,
+                );
               } else {
                 final created = await provider.createNegotiation(
                   widget.bidId ?? 'bid-001',
                   remarks,
                 );
                 if (created != null) {
-                  ok = await provider.addOffer(created.id, amount, remarks);
+                  ok = await provider.addOffer(
+                    created.id,
+                    amount,
+                    remarks,
+                    offeredBy: userRoleStr,
+                    offeredByName: userNameStr,
+                  );
                 } else {
                   ok = true;
                 }
               }
 
               if (ok) {
-                // Auto-generate notification for Transporter alert
+                // Auto-generate notification for the target role!
+                final notificationTargetRole = isCompany ? "Transporter" : "Company";
                 notifProvider.addLocalNotification(
                   NotificationModel(
                     id: 'notif-${DateTime.now().millisecondsSinceEpoch}',
                     type: NotificationTypeEnum.NEGOTIATION,
-                    title: "New Counter Offer Received!",
-                    message: "Company submitted a counter offer proposal of ₹${amount.toStringAsFixed(0)}. Tap to review & respond.",
+                    title: "New Counter Offer Received ($userRoleStr)",
+                    message: "$userNameStr ($userRoleStr) submitted a counter offer of ₹${amount.toStringAsFixed(0)}. Tap to review & respond.",
                     read: false,
                     referenceType: "NEGOTIATION",
                     referenceId: widget.bidId ?? 'bid-001',
@@ -133,8 +155,8 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
                 );
 
                 messenger.showSnackBar(
-                  const SnackBar(
-                    content: Text("Counter offer submitted! Transporter notified via alert."),
+                  SnackBar(
+                    content: Text("Counter offer submitted! $notificationTargetRole notified via alert."),
                     backgroundColor: AppColors.successGreen,
                   ),
                 );
@@ -162,6 +184,8 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<NegotiationProvider>(context);
+    final authProvider = Provider.of<AuthProvider>(context);
+    final currentUserRole = authProvider.user?.isCompany == true ? 'COMPANY' : 'TRANSPORTER';
 
     final rawList = widget.tenderId != null
         ? provider.tenderNegotiations
@@ -302,6 +326,7 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
                                         final item = list[index];
                                         return NegotiationOfferCard(
                                           negotiation: item,
+                                          currentUserRole: currentUserRole,
                                           onCounterOffer: item.isOpen
                                               ? () => _showCounterOfferDialog(context, item.id)
                                               : null,

@@ -100,7 +100,13 @@ class NegotiationProvider with ChangeNotifier {
     }
   }
 
-  Future<bool> addOffer(String id, double amount, String remarks) async {
+  Future<bool> addOffer(
+    String id,
+    double amount,
+    String remarks, {
+    String offeredBy = 'COMPANY',
+    String? offeredByName,
+  }) async {
     _setLoading(true);
     _setError(null);
     try {
@@ -113,8 +119,8 @@ class NegotiationProvider with ChangeNotifier {
       // Fallback for offline/demo mode evaluation
       final newOfferItem = NegotiationOfferModel(
         id: 'offer-${DateTime.now().millisecondsSinceEpoch}',
-        offeredBy: 'COMPANY',
-        offeredByName: 'Company Shipper',
+        offeredBy: offeredBy,
+        offeredByName: offeredByName ?? (offeredBy.toUpperCase() == 'COMPANY' ? 'Company Shipper' : 'Express Logistics'),
         amount: amount,
         remarks: remarks.isNotEmpty ? remarks : "Counter offer proposal",
         createdAt: DateTime.now(),
@@ -142,7 +148,7 @@ class NegotiationProvider with ChangeNotifier {
         transporterId: target.transporterId,
         status: 'COUNTER_OFFERED',
         currentAmount: amount,
-        lastOfferedBy: 'COMPANY',
+        lastOfferedBy: offeredBy.toUpperCase(),
         finalAmount: target.finalAmount,
         acceptedBy: target.acceptedBy,
         closedAt: null,
