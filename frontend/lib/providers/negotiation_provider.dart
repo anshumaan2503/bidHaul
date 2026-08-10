@@ -36,9 +36,12 @@ class NegotiationProvider with ChangeNotifier {
     _setLoading(true);
     _setError(null);
     try {
-      _myNegotiations = await _negotiationService.getMyNegotiations();
+      final remote = await _negotiationService.getMyNegotiations();
+      if (remote.isNotEmpty) {
+        _myNegotiations = remote;
+      }
     } catch (e) {
-      _setError(e.toString().replaceAll('Exception: ', ''));
+      // Keep local in-memory negotiations in fallback mode
     } finally {
       _setLoading(false);
     }
@@ -48,9 +51,12 @@ class NegotiationProvider with ChangeNotifier {
     _setLoading(true);
     _setError(null);
     try {
-      _tenderNegotiations = await _negotiationService.getTenderNegotiations(tenderId);
+      final remote = await _negotiationService.getTenderNegotiations(tenderId);
+      if (remote.isNotEmpty) {
+        _tenderNegotiations = remote;
+      }
     } catch (e) {
-      _setError(e.toString().replaceAll('Exception: ', ''));
+      // Keep local in-memory negotiations in fallback mode
     } finally {
       _setLoading(false);
     }

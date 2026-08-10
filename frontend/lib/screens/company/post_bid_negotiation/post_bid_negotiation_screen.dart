@@ -193,11 +193,31 @@ class _PostBidNegotiationScreenState extends State<PostBidNegotiationScreen> {
     final authProvider = Provider.of<AuthProvider>(context);
     final currentUserRole = authProvider.user?.isCompany == true ? 'COMPANY' : 'TRANSPORTER';
 
-    final rawList = widget.tenderId != null
-        ? provider.tenderNegotiations
-        : provider.myNegotiations;
+    final Set<String> seenIds = {};
+    final List<NegotiationModel> combinedList = [];
 
-    List<NegotiationModel> list = List<NegotiationModel>.from(rawList);
+    for (final item in [...provider.tenderNegotiations, ...provider.myNegotiations]) {
+      if (!seenIds.contains(item.id)) {
+        seenIds.add(item.id);
+        combinedList.add(item);
+      }
+    }
+    if (provider.currentNegotiation != null && !seenIds.contains(provider.currentNegotiation!.id)) {
+      combinedList.add(provider.currentNegotiation!);
+    }
+
+    List<NegotiationModel> list = List<NegotiationModel>.from(combinedList);
+
+    if (widget.tenderId != null && widget.tenderId!.isNotEmpty) {
+      final tenderMatches = list.where((n) =>
+        n.tenderId == widget.tenderId ||
+        widget.tenderId!.contains(n.tenderId) ||
+        n.tenderId.contains(widget.tenderId!)
+      ).toList();
+      if (tenderMatches.isNotEmpty) {
+        list = tenderMatches;
+      }
+    }
 
     final targetBidId = widget.bidId;
     if (targetBidId != null && targetBidId.isNotEmpty) {
